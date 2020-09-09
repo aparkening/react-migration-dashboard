@@ -7,9 +7,11 @@ import PropTypes from 'prop-types';
  * @param {string} name
  *   Full name of bio
  * @param nodeId
- *   Drupal node.nid of the article.
+ *   drupal_internal__nid of the bio
  * @param {function} updateItem
- *   function to update status field and move item to another list
+ *   Function to update status field and move item to another list
+ * @param drupalId
+ *   Drupal data id of the bio.
  *
  */
 function ListItem(props) {
