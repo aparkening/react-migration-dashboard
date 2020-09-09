@@ -9,9 +9,9 @@ import PropTypes from 'prop-types';
  * @param nodeId
  *   drupal_internal__nid of the bio
  * @param {function} updateItem
- *   Function to update status field and move item to another list
+ *   Function to update status field and move item to another list. Requires drupalId
  * @param drupalId
- *   Drupal data id of the bio.
+ *   Data id of bio
  *
  */
 function ListItem(props) {
@@ -28,7 +28,7 @@ function ListItem(props) {
         <a href={`/node/${nodeId}`}>{name}</a>
       </td>
       <td>
-        <button type="button" onClick={() => { updateItem(drupalId); }}>Add Next</button>
+        <button type="button" onClick={() => { updateItem(drupalId, "card"); }}>Add Next</button>
         {/*   updateItem={this.updateTask}  */}
       </td>
       {/* <td>

@@ -1,8 +1,84 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+/**
+ * Display an individual bio card.
+ *
+ * @param {string} name
+ *   Full name of bio
+  * @param {string} summary
+ *   Summary body of bio
+ * @param nodeId
+ *   drupal_internal__nid of the bio
+ * @param {function} updateItem
+ *   Function to update status field and move item to another list. Requires drupalId
+ * @param drupalId
+ *   Data id of bio
+ * @param headshotId
+ *   Headshot object id for locating headshot data
+  * @param headshotAlt
+ *   Alt text for headshot. Requires headshotId
+  * @param headshotFilename
+ *   Headshot filename. Requires headshotId
+ *
+ */
 
 function Card(props) {
+  const {
+    name,
+    nodeId,
+    updateItem,
+    drupalId,
+    summary,
+    headshotAlt,
+    headshotFilename,
+  } = props;
 
-  return <div>{props.name}</div>;
+  /* Display 
+    Headshot
+      get data id: InitialData.data.relationships.field_headshot.data.id
+      get meta data:
+        InitialData.data.relationships.field_headshot.data.meta.alt
+      
+      Then get 
+        - InitialData.included.filter(data from id).attributes.filename
+        - Make own url: 
+          /sites/default/files/styles/medium/public/headshots/{filename}
+
+    Title
+    Summary
+
+    Link to node
+    Button to move back to To Do
+  */
+
+  return (
+    <article>
+      <div className="field field--name-field-headshot field--type-image field__item">  
+        <img src={`http://localhost/august/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`} alt={headshotAlt} className="image-style-medium" />
+      </div>
+      <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">
+        <h2><a href={`/node/${nodeId}`}>{name}</a></h2>
+        <p>{summary}</p>
+
+        <button type="button" onClick={() => { updateItem(drupalId, "list"); }}>Remove from this list</button>
+      </div>
+    </article>
+  );
 }
+
+/**
+ * Define propTypes per Airbnb ESLint rules:
+ * https://github.com/airbnb/javascript/tree/master/react#props
+ */
+Card.propTypes = {
+  name: PropTypes.string.isRequired,
+  nodeId: PropTypes.number.isRequired,
+  drupalId: PropTypes.string.isRequired,
+  updateItem: PropTypes.func.isRequired,
+  summary: PropTypes.string.isRequired,
+  headshotAlt: PropTypes.string.isRequired,
+  headshotFilename: PropTypes.string.isRequired,
+};
 
 export default Card;
