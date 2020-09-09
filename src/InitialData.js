@@ -1,3 +1,8 @@
+/**
+* Static representation of:
+* http://localhost/august/jsonapi/node/bio?include=field_headshot
+*/
+
 const initialData = {
   "jsonapi": {
     "version": "1.0",
@@ -45,7 +50,7 @@ const initialData = {
           "processed": "<p>The area is no bigger than the galley on a sailboat, with just two induction burners and a small convection oven. There’s no prep cook, no sous-chef, no one washing pans. “I’m 100% responsible for every component of every dish. It’s a little scary, but it’s also fulfilling,” he says. It’s a very different set-up from his previous job, but the food that he turns out is quite similar. Jackson shops everyday (there’s no walk-in cooler), visiting farmers’ markets, Harbor Fish market and other specialty stores, getting inspiration from what’s available. The menu is concise, just a half dozen small plates and one or two entrees, and it’s different each day. Offerings range from things Jackson can prepare in advance, like a potato tortilla to whole pan-roasted fish, that’s cooked to order. The branzino that I tasted on one visit was incredibly moist and flavorful. Smaller plates include toasts made with chewy pan-seared bread with lots of olive oil and garlic, topped with whatever compels Jackson that night. We tried a savory mix of mushrooms and radicchio with agrodolce, a blend of sweet and sour flavors. “I’m all about the creamy, crunchy, acidic, fatty combos,” the chef says. Each dish contains these elements, combined with restraint and finesse. “This is the kind of food I’ve always cooked,” he continues, ”and it goes well with our wines.” Drifters Wife now offers 150 bottles and 12-15 wines by the glass. The list changes frequently because availability of these specialty wines is limited.</p>\n\n<p>Sitting at one of the small tables, enjoying a glass of Domaine Lattard Gamay, while the sun starts to sink, I’m feeling thankful that the Hales felt compelled to open the Drifters Wife. Maine &amp; Loire still exists in the back of the room, and is open all day. But now there’s a serene, inviting place where we can taste the wines the couple has worked so hard to introduce to Maine.</p>\n\n<p>Source: <a href=\"https://www.themainemag.com/blog/drifters-wife/\">https://www.themainemag.com/blog/drifters-wife/</a></p>",
           "summary": "Ben Jackson is standing in his “kitchen” prepping for tonight’s meal. "
         },
-        "field_2020_migration_status": "To Do"
+        "field_2020_migration_status": "In Progress"
       },
       "relationships": {
         "node_type": {
@@ -147,7 +152,7 @@ const initialData = {
           "processed": "<p>As a child she worked in her family’s nearby restaurant, and like many others from rural towns, she thought she would have to leave to find success. Instead, she found it with a supper club she hosted in a Belfast apartment. She turned the supper club into an acclaimed but short-lived restaurant, its run and her culinary ascension cut short by a bitter divorce. Locked out of her restaurant and apartment, the only thing she retained from the business was its name: <a href=\"https://www.findthelostkitchen.com/\">the Lost Kitchen</a>. Then one of the farmers she knew from her Belfast restaurant told her that the old Freedom mill, which had recently been renovated, needed a tenant. “I saw the place, and I said, ‘Oh, my god. I can see a future here,’” French says. “I just started to dream about the space.” When she opened in July 2014 in the grist mill that was on its own second life, her customers were waiting. Now, reservations for the prix-fixe dinners are secured by a raffle system. This year 20,000 people mailed postcards to the restaurant during a two-week stretch in April for a chance at a seating. In its fifth year, the restaurant is a “well-oiled machine,” French says. “I feel like I’ve found this little bit of perfection and we got it and we know what it is and I don’t want to lose it.” She can’t imagine running her restaurant anywhere else. “To me, Maine has always been home and has always been the place that’s made me feel loved,” she says. “I feel like I can be my true self here.”</p>\n\n<p>Source: <a href=\"https://www.themainemag.com/people/erin-french-chef-of-the-lost-kitchen/#close\">https://www.themainemag.com/people/erin-french-chef-of-the-lost-kitchen</a></p>",
           "summary": "Erin French grew up down the road from a crumbling grist mill in Freedom."
         },
-        "field_2020_migration_status": "To Do"
+        "field_2020_migration_status": "Done"
       },
       "relationships": {
         "node_type": {
@@ -351,7 +356,7 @@ const initialData = {
           "processed": "<p>Chef Finigan grew up in the mountains of Vermont. Finigan had a culinary upbringing and a passion for cooking at an early age. Her father, Kevin Finigan, is one of Vermont’s great chefs. Finigan began working in kitchens at age 14 and has never stopped.</p>\n\n<p>Throughout her culinary career, Devin Finigan has worked alongside many well known chefs including Thomas Keller (The French Laundry and Per Se), Jean-Georges Vongerichten (Jean-Georges), Dan Barber (Blue Hill and Blue Hill at Stone Barns), Melissa Kelly (Primo), and Kyle Connaughton (Single Thread Farms).</p>\n\n<p>Finigan strives to maintain inspiration in her work. Traveling the world into others kitchens helps to fuel that creativity. “I want to keep learning, keep being inspired.”</p>\n\n<p>Finigan’s food brings you an intimate relationship with Deer Isle. She creates exquisite meals with a commitment to locally-sourced ingredients from the island and the ocean around it.</p>\n\n<p>Source: <a href=\"https://aragostamaine.com/about/\">https://aragostamaine.com/about/</a></p>",
           "summary": "Devin Finigan is the Executive Chef and proprietor of Aragosta at Goose Cove, recently named “Best Waterfront Restaurant in Maine” by DownEast Magazine."
         },
-        "field_2020_migration_status": "To Do"
+        "field_2020_migration_status": "In Progress"
       },
       "relationships": {
         "node_type": {
@@ -453,7 +458,7 @@ const initialData = {
           "processed": "<p>Krista Kern Desjarlais is the former owner of Bresca in Portland and current owner of The Honey Bee on the shores of Sabbathday Lake, has found herself a new location in North Yarmouth for a tiny restaurant. And this restaurant is called The Purple House. She was also nominated for a James Beard Award in the Best Chef: Northeast in 2018.</p>\n\n<p>Source: <a href=\"https://www.chefsfeed.com/experts/2318-krista-kern-desjarlais\">https://www.chefsfeed.com/experts/2318-krista-kern-desjarlais</a></p>",
           "summary": "Krista Kern Desjarlais is well known in Portland for her amazing food."
         },
-        "field_2020_migration_status": "To Do"
+        "field_2020_migration_status": "Done"
       },
       "relationships": {
         "node_type": {
@@ -1031,9 +1036,401 @@ const initialData = {
       }
     }
   ],
+  "included": [
+    {
+      "type": "file--file",
+      "id": "59509704-d19e-43d9-b62c-5ee92548958d",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/59509704-d19e-43d9-b62c-5ee92548958d"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 18,
+        "langcode": "en",
+        "filename": "ben.jpg",
+        "uri": {
+          "value": "public://headshots/ben.jpg",
+          "url": "/august/sites/default/files/headshots/ben.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 548190,
+        "status": true,
+        "created": "2020-09-07T19:57:51+00:00",
+        "changed": "2020-09-07T19:58:01+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/59509704-d19e-43d9-b62c-5ee92548958d/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/59509704-d19e-43d9-b62c-5ee92548958d/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "abed24ca-81be-41ae-a0f8-61d479f010d3",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/abed24ca-81be-41ae-a0f8-61d479f010d3"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 19,
+        "langcode": "en",
+        "filename": "erin_0.jpg",
+        "uri": {
+          "value": "public://headshots/erin_0.jpg",
+          "url": "/august/sites/default/files/headshots/erin_0.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 44586,
+        "status": true,
+        "created": "2020-09-07T19:58:25+00:00",
+        "changed": "2020-09-07T19:58:30+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/abed24ca-81be-41ae-a0f8-61d479f010d3/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/abed24ca-81be-41ae-a0f8-61d479f010d3/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "f9aef748-0999-452c-84a6-db529b8af4e0",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/f9aef748-0999-452c-84a6-db529b8af4e0"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 14,
+        "langcode": "en",
+        "filename": "vien_0.jpg",
+        "uri": {
+          "value": "public://headshots/vien_0.jpg",
+          "url": "/august/sites/default/files/headshots/vien_0.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 45848,
+        "status": true,
+        "created": "2020-09-07T19:41:02+00:00",
+        "changed": "2020-09-07T19:41:23+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/f9aef748-0999-452c-84a6-db529b8af4e0/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/f9aef748-0999-452c-84a6-db529b8af4e0/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "dc461168-477a-485f-b507-51eb40a0d0e7",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/dc461168-477a-485f-b507-51eb40a0d0e7"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 15,
+        "langcode": "en",
+        "filename": "devin.jpg",
+        "uri": {
+          "value": "public://headshots/devin.jpg",
+          "url": "/august/sites/default/files/headshots/devin.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 82638,
+        "status": true,
+        "created": "2020-09-07T19:49:40+00:00",
+        "changed": "2020-09-07T19:49:56+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/dc461168-477a-485f-b507-51eb40a0d0e7/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/dc461168-477a-485f-b507-51eb40a0d0e7/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "f346d6aa-32ca-4776-8a74-842b73a6dbbb",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/f346d6aa-32ca-4776-8a74-842b73a6dbbb"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 20,
+        "langcode": "en",
+        "filename": "krista.jpg",
+        "uri": {
+          "value": "public://headshots/krista.jpg",
+          "url": "/august/sites/default/files/headshots/krista.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 21596,
+        "status": true,
+        "created": "2020-09-07T20:05:02+00:00",
+        "changed": "2020-09-07T20:07:36+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/f346d6aa-32ca-4776-8a74-842b73a6dbbb/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/f346d6aa-32ca-4776-8a74-842b73a6dbbb/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "f577dbe2-3f72-4927-a440-bf79c9d769a3",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/f577dbe2-3f72-4927-a440-bf79c9d769a3"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 21,
+        "langcode": "en",
+        "filename": "greg.jpg",
+        "uri": {
+          "value": "public://headshots/greg.jpg",
+          "url": "/august/sites/default/files/headshots/greg.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 102751,
+        "status": true,
+        "created": "2020-09-07T20:09:08+00:00",
+        "changed": "2020-09-07T20:09:28+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/f577dbe2-3f72-4927-a440-bf79c9d769a3/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/f577dbe2-3f72-4927-a440-bf79c9d769a3/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "878b8949-e2c4-4ac4-9323-486b4b6fac15",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/878b8949-e2c4-4ac4-9323-486b4b6fac15"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 22,
+        "langcode": "en",
+        "filename": "chad.jpg",
+        "uri": {
+          "value": "public://headshots/chad.jpg",
+          "url": "/august/sites/default/files/headshots/chad.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 98341,
+        "status": true,
+        "created": "2020-09-07T20:10:01+00:00",
+        "changed": "2020-09-07T20:10:50+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/878b8949-e2c4-4ac4-9323-486b4b6fac15/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/878b8949-e2c4-4ac4-9323-486b4b6fac15/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "3b1e755a-8e12-440e-a8ed-7ed6764c21a8",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/3b1e755a-8e12-440e-a8ed-7ed6764c21a8"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 23,
+        "langcode": "en",
+        "filename": "ravin.jpg",
+        "uri": {
+          "value": "public://headshots/ravin.jpg",
+          "url": "/august/sites/default/files/headshots/ravin.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 18925,
+        "status": true,
+        "created": "2020-09-07T20:11:35+00:00",
+        "changed": "2020-09-07T20:11:58+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/3b1e755a-8e12-440e-a8ed-7ed6764c21a8/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/3b1e755a-8e12-440e-a8ed-7ed6764c21a8/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "97451faa-739d-4240-9886-e58aa08d423f",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/97451faa-739d-4240-9886-e58aa08d423f"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 24,
+        "langcode": "en",
+        "filename": "briana.jpg",
+        "uri": {
+          "value": "public://headshots/briana.jpg",
+          "url": "/august/sites/default/files/headshots/briana.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 24057,
+        "status": true,
+        "created": "2020-09-07T20:12:26+00:00",
+        "changed": "2020-09-07T20:12:40+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/97451faa-739d-4240-9886-e58aa08d423f/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/97451faa-739d-4240-9886-e58aa08d423f/relationships/uid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "file--file",
+      "id": "3fe2d577-b3dc-44c4-a61a-8cc39d14c512",
+      "links": {
+        "self": {
+          "href": "http://localhost/august/jsonapi/file/file/3fe2d577-b3dc-44c4-a61a-8cc39d14c512"
+        }
+      },
+      "attributes": {
+        "drupal_internal__fid": 25,
+        "langcode": "en",
+        "filename": "melissa.jpg",
+        "uri": {
+          "value": "public://headshots/melissa.jpg",
+          "url": "/august/sites/default/files/headshots/melissa.jpg"
+        },
+        "filemime": "image/jpeg",
+        "filesize": 27863,
+        "status": true,
+        "created": "2020-09-07T20:13:16+00:00",
+        "changed": "2020-09-07T20:13:49+00:00"
+      },
+      "relationships": {
+        "uid": {
+          "data": {
+            "type": "user--user",
+            "id": "94bd3c1a-b985-482f-a754-58a1afe49f40"
+          },
+          "links": {
+            "related": {
+              "href": "http://localhost/august/jsonapi/file/file/3fe2d577-b3dc-44c4-a61a-8cc39d14c512/uid"
+            },
+            "self": {
+              "href": "http://localhost/august/jsonapi/file/file/3fe2d577-b3dc-44c4-a61a-8cc39d14c512/relationships/uid"
+            }
+          }
+        }
+      }
+    }
+  ],
   "links": {
     "self": {
-      "href": "http://localhost/august/jsonapi/node/bio"
+      "href": "http://localhost/august/jsonapi/node/bio?include=field_headshot"
     }
   }
 };
