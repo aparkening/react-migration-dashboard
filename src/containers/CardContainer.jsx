@@ -58,7 +58,7 @@ function CardContainer(props) {
 
   return (
     <div className="list">
-      <h2>{title}</h2>
+      <h2>{title} <span>{bios? `${bios.length} item${bios.length>1 ? 's' : ''}`: null}</span></h2>
       <Row>
         {displayItems()}
       </Row>

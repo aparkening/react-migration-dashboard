@@ -64,7 +64,7 @@ function ListContainer(props) {
   return (
     <div className="list">
       
-      <h2>{title}</h2>
+      <h2>{title} <span>{bios? `${bios.length} item${bios.length>1 ? 's' : ''}`: null}</span></h2>
       <table className="views-table views-view-table cols-7 responsive-enabled sticky-enabled sticky-table">
         <thead>
           <tr>
