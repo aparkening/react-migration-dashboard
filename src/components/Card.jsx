@@ -42,15 +42,15 @@ function Card(props) {
     headshotFilename,
   } = props;
 
-  /* Display 
+  /* Display
     Headshot
       get data id: InitialData.data.relationships.field_headshot.data.id
       get meta data:
         InitialData.data.relationships.field_headshot.data.meta.alt
-      
-      Then get 
+
+      Then get
         - InitialData.included.filter(data from id).attributes.filename
-        - Make own url: 
+        - Make own url:
           /sites/default/files/styles/medium/public/headshots/{filename}
 
     Title
@@ -62,7 +62,7 @@ function Card(props) {
 
   return (
     <Col>
-      <div className="field field--name-field-headshot field--type-image field__item">  
+      <div className="field field--name-field-headshot field--type-image field__item">
         <img src={`http://localhost/august/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`} alt={headshotAlt} className="image-style-medium" />
       </div>
       <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">

@@ -31,8 +31,7 @@ function ListItem(props) {
       <td>
         {listId === 'todo' ? (
           <button type="button" onClick={() => { updateItem(drupalId, listId, 'inProgress', 'In Progress'); /* drupalId, oldListId, newListId, newMigrationStatus */ }}>Add Next</button>
-        ) : ( <span>&nbsp;</span> )
-        }
+        ) : (<span>&nbsp;</span>)}
       </td>
     </tr>
   );
