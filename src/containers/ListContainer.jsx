@@ -25,39 +25,23 @@ function ListContainer(props) {
   } = props;
 
   /**
-   * Helper function to validate data retrieved from JSON:API.
-   */
-  function isValidData(data) {
-    if (data === null) {
-      return false;
-    }
-    if (data === undefined ||
-      data === null ||
-      data.length === 0 ) {
-      return false;
-    }
-    return true;
-  }
-
-  /**
    * Return ListItem components
    */
   function displayItems() {
-    if (isValidData(bios)) {
-      return bios.map(obj => (
-        <ListItem 
-          key={obj.id} 
-          name={obj.attributes.title} 
+    if (bios.length) {
+      return bios.map((obj) => (
+        <ListItem
+          key={obj.id}
+          name={obj.attributes.title}
           nodeId={obj.attributes.drupal_internal__nid}
-          updateItem={updateItem} 
+          updateItem={updateItem}
           drupalId={obj.id}
           listId={listId}
         />
       ));
     }
-    else {
-      return <tr><td colSpan="2">No data available.</td></tr>
-    } 
+
+    return <tr><td colSpan="2">No data available.</td></tr>;
   }
 
   /**
@@ -65,15 +49,19 @@ function ListContainer(props) {
    */
   return (
     <div className="list">
-      <h2>{title} <span>{isValidData(bios) ? `${bios.length} item${bios.length>1 ? 's' : ''}` : null}</span></h2>
+      <h2>
+        {title}
+        {' '}
+        <span>{bios.length ? `${bios.length} item${bios.length > 1 ? 's' : ''}` : null}</span>
+      </h2>
       <table className="views-table views-view-table cols-7 responsive-enabled sticky-enabled sticky-table">
         <thead>
           <tr>
             <th>Name</th>
-            <th></th>
+            <th>{' '}</th>
           </tr>
         </thead>
-        <tbody> 
+        <tbody>
           {displayItems()}
         </tbody>
       </table>
@@ -90,6 +78,9 @@ ListContainer.propTypes = {
   listId: PropTypes.string.isRequired,
   bios: PropTypes.array,
   updateItem: PropTypes.func.isRequired,
+};
+ListContainer.defaultProps = {
+  bios: [],
 };
 
 export default ListContainer;

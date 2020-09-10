@@ -31,34 +31,22 @@ function CardContainer(props) {
   } = props;
 
   /**
-   * Helper function to validate data retrieved from JSON:API.
-   */
-  function isValidData(data) {
-    if (data === null) {
-      return false;
-    }
-    if (data === undefined ||
-      data === null ||
-      data.length === 0 ) {
-      return false;
-    }
-    return true;
-  }
-
-  /**
    * Return Card components with headshot from included array
    */
   function displayItems() {
-    if (isValidData(bios)) {
-      return bios.map(obj => {
-        const file = included.find(head => head.id === obj.relationships.field_headshot.data.id).attributes.filename;
+    if (bios.length) {
+      return bios.map((obj) => {
+        // debugger
+        const file = included.find((head) => (
+          head.id === obj.relationships.field_headshot.data.id
+        )).attributes.filename;
         return (
-          <Card 
-            key={obj.id} 
+          <Card
+            key={obj.id}
             summary={obj.attributes.body.summary}
-            name={obj.attributes.title} 
+            name={obj.attributes.title}
             nodeId={obj.attributes.drupal_internal__nid}
-            updateItem={updateItem} 
+            updateItem={updateItem}
             drupalId={obj.id}
             headshotId={obj.relationships.field_headshot.data.id}
             headshotAlt={obj.relationships.field_headshot.data.meta.alt}
@@ -67,9 +55,8 @@ function CardContainer(props) {
         );
       });
     }
-    else {
-      return <div>No data available.</div>
-    } 
+
+    return <div>No data available.</div>;
   }
 
   /**
@@ -77,7 +64,11 @@ function CardContainer(props) {
    */
   return (
     <div className="list">
-      <h2>{title} <span>{isValidData(bios) ? `${bios.length} item${bios.length>1 ? 's' : ''}` : null}</span></h2>
+      <h2>
+        {title}
+        {' '}
+        <span>{bios.length ? `${bios.length} item${bios.length > 1 ? 's' : ''}` : null}</span>
+      </h2>
       <Row>
         {displayItems()}
       </Row>
@@ -94,6 +85,9 @@ CardContainer.propTypes = {
   bios: PropTypes.array,
   updateItem: PropTypes.func.isRequired,
   included: PropTypes.array.isRequired,
+};
+CardContainer.defaultProps = {
+  bios: [],
 };
 
 export default CardContainer;
