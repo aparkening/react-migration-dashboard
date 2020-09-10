@@ -12,26 +12,44 @@ class App extends React.Component {
 
     // Set initial state
     this.state = {
+      bioData: [],
+      bioIncluded: [],
       lists: {
         inProgress: {
           id: 'inProgress',
           title: 'In Progress',
-          bioIds: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'In Progress'),
         },
         todo: {
           id: 'todo',
           title: 'To Do',
-          bioIds: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'To Do'),
         },
         done: {
           id: 'done',
           title: 'Done',
-          bioIds: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'Done'),
         },
       },
-      bioData: initialData.data,
-      bioIncluded: initialData.included,
     }
+    // this.state = {
+    //   lists: {
+    //     inProgress: {
+    //       id: 'inProgress',
+    //       title: 'In Progress',
+    //       bios: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'In Progress'),
+    //     },
+    //     todo: {
+    //       id: 'todo',
+    //       title: 'To Do',
+    //       bios: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'To Do'),
+    //     },
+    //     done: {
+    //       id: 'done',
+    //       title: 'Done',
+    //       bios: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'Done'),
+    //     },
+    //   },
+    //   bioData: initialData.data,
+    //   bioIncluded: initialData.included,
+    // }
 
     this.isValidData = this.isValidData.bind(this);
     this.updateItem = this.updateItem.bind(this);
@@ -58,18 +76,48 @@ class App extends React.Component {
   /**
    * Update node status
    */
-  updateItem(drupalId, listName) {
-    console.log(`Bio id is ${drupalId}`);
-    console.log(`New list name is ${listName}`);
+  updateItem(drupalId, oldListId, newListId, newMigrationStatus) {
 
-    
-    // Move item to new list
+    // Record current data
+    // const revertedBioData = [...this.state.bioData];
+    // const revertedLists = [...this.state.lists];
 
-    // Update item node
-      // If failure, move back to old list
+    // Update bioData with new status
+    let updatedBioData = [...this.state.bioData];
+    let updatedBio = updatedBioData.find(node => node.id === drupalId);
+    updatedBio.attributes.field_2020_migration_status = newMigrationStatus;
 
     // Remove item from old list
-    // const updatedOldList = this.state.lists[oldListId].taskIds.filter(task => task !== id)
+    const updatedOldList = this.state.lists[oldListId].bios.filter(node => node.id !== drupalId)
+
+    // Move item to new list
+    this.setState({
+      ...this.state,
+      bioData: updatedBioData,
+      lists: {
+        ...this.state.lists, 
+        [oldListId]: {
+          ...this.state.lists[oldListId],
+          bios: updatedOldList
+        },
+        [newListId]: {
+          ...this.state.lists[newListId],
+          bios: [
+            ...this.state.lists[newListId].bios, 
+            updatedBio
+          ]
+        }
+      },
+    });
+
+    // Update server node
+      // If failure, revert to previous state
+      // updateServerNode(drupalId, newMigrationStatus)
+      // this.setState({
+      //   ...this.state,
+      //   bioData: revertedBioData,
+      //   lists: revertedLists
+      // });
 
   }
 
@@ -134,6 +182,28 @@ class App extends React.Component {
   // }
 
 
+  // Populate state
+  componentDidMount() {
+    this.setState({
+      bioData: initialData.data,
+      bioIncluded: initialData.included,
+      lists: {
+        inProgress: {
+          ...this.state.lists.inProgress,
+          bios: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'In Progress'),
+        },
+        todo: {
+          ...this.state.lists.todo,
+          bios: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'To Do'),
+        },
+        done: {
+          ...this.state.lists.done,
+          bios: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'Done'),
+        },
+      },
+    });
+  }
+
   /**
    * Display Migration Dashboard
    *
@@ -155,7 +225,7 @@ class App extends React.Component {
               <CardContainer 
                 key={list.id} 
                 title={list.title}
-                bios={list.bioIds}
+                bios={list.bios}
                 updateItem={this.updateItem} 
                 included={this.state.bioIncluded}
               />
@@ -166,7 +236,7 @@ class App extends React.Component {
                 key={list.id} 
                 title={list.title}
                 listId={list.id}
-                bios={list.bioIds}
+                bios={list.bios}
                 updateItem={this.updateItem} 
               />
             );

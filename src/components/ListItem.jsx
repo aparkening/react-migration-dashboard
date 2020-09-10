@@ -29,9 +29,8 @@ function ListItem(props) {
         <a href={`/node/${nodeId}`}>{name}</a>
       </td>
       <td>
-        {console.log(listId)}
         {listId === 'todo' ? (
-          <button type="button" onClick={() => { updateItem(drupalId, "card"); }}>Add Next</button>
+          <button type="button" onClick={() => { updateItem(drupalId, listId, 'inProgress', 'In Progress'); /* drupalId, oldListId, newListId, newMigrationStatus */ }}>Add Next</button>
         ) : ( <span>&nbsp;</span> )
         }
       </td>

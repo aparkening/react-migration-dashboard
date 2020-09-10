@@ -32,7 +32,7 @@ function CardContainer(props) {
     return true;
   }
 
-  function displayListItems() {
+  function displayItems() {
     if (isValidData(bios)) {
       return bios.map(obj => {
         const file = included.find(head => head.id === obj.relationships.field_headshot.data.id).attributes.filename;
@@ -60,7 +60,7 @@ function CardContainer(props) {
     <div className="list">
       <h2>{title}</h2>
       <Row>
-        {displayListItems()}
+        {displayItems()}
       </Row>
     </div>
   );
@@ -72,7 +72,7 @@ function CardContainer(props) {
  */
 CardContainer.propTypes = {
   title: PropTypes.string.isRequired,
-  bios: PropTypes.array.isRequired,
+  bios: PropTypes.array,
   updateItem: PropTypes.func.isRequired,
   included: PropTypes.array.isRequired,
 };

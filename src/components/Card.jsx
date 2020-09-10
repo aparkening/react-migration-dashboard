@@ -69,8 +69,7 @@ function Card(props) {
       <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">
         <h3><a href={`/node/${nodeId}`}>{name}</a></h3>
         <p>{summary}</p>
-
-        <button type="button" onClick={() => { updateItem(drupalId, "list"); }}>Remove from this list</button>
+        <button type="button" onClick={() => { updateItem(drupalId, 'inProgress', 'todo', 'To Do'); /* drupalId, oldListId, newListId, newMigrationStatus */ }}>Remove from this list</button>
       </div>
     </Col>
   );

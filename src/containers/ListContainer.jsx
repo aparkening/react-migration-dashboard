@@ -28,24 +28,38 @@ function ListContainer(props) {
     updateItem,
   } = props;
 
-  // function displayListItems() {
-    // if (isValidData(data)) {
-    //   console.log("We're going!");
-    //   console.log(data);
-      // return bios.map(obj => (
-      //   <ListItem 
-      //     key={obj.id} 
-      //     name={obj.attributes.title} 
-      //     nodeId={obj.attributes.drupal_internal__nid}
-      //     updateItem={updateItem} 
-      //     drupalId={obj.id}
-      //   />
-      // ));
-    // }
-    // else {
-    //   return <tr><td colspan="3">No data available.</td></tr>
-    // } 
-  // }
+  /**
+   * Helper function to validate data retrieved from JSON:API.
+   */
+  function isValidData(data) {
+    if (data === null) {
+      return false;
+    }
+    if (data === undefined ||
+      data === null ||
+      data.length === 0 ) {
+      return false;
+    }
+    return true;
+  }
+
+  function displayItems() {
+    if (isValidData(bios)) {
+      return bios.map(obj => (
+        <ListItem 
+          key={obj.id} 
+          name={obj.attributes.title} 
+          nodeId={obj.attributes.drupal_internal__nid}
+          updateItem={updateItem} 
+          drupalId={obj.id}
+          listId={listId}
+        />
+      ));
+    }
+    else {
+      return <tr><td colSpan="2">No data available.</td></tr>
+    } 
+  }
 
   return (
     <div className="list">
@@ -58,19 +72,8 @@ function ListContainer(props) {
             <th></th>
           </tr>
         </thead>
-        <tbody>        
-          {bios.map(obj => {
-            return (
-            <ListItem 
-              key={obj.id} 
-              name={obj.attributes.title} 
-              nodeId={obj.attributes.drupal_internal__nid}
-              updateItem={updateItem} 
-              drupalId={obj.id}
-              listId={listId}
-            />
-            );
-          })}
+        <tbody> 
+          {displayItems()}
         </tbody>
       </table>
     </div>
@@ -84,7 +87,7 @@ function ListContainer(props) {
 ListContainer.propTypes = {
   title: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
-  bios: PropTypes.array.isRequired,
+  bios: PropTypes.array,
   updateItem: PropTypes.func.isRequired,
 };
 
