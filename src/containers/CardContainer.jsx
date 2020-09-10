@@ -9,6 +9,19 @@ const Row = styled.div`
   flex-wrap: wrap;
 `;
 
+/**
+ * Display bios as list of cards.
+ *
+ * @param {string} title
+ *   Title of list
+ * @param {array} bios
+ *   List of bios
+ * @param {function} updateItem
+ *   Function to update status field and move item to another list. Requires drupalId
+ *  * @param {array} included
+ *   List of headshot includes
+ *
+ */
 function CardContainer(props) {
   const {
     title,
@@ -32,6 +45,9 @@ function CardContainer(props) {
     return true;
   }
 
+  /**
+   * Return Card components with headshot from included array
+   */
   function displayItems() {
     if (isValidData(bios)) {
       return bios.map(obj => {
@@ -56,9 +72,12 @@ function CardContainer(props) {
     } 
   }
 
+  /**
+   * Display Card components with title and count
+   */
   return (
     <div className="list">
-      <h2>{title} <span>{bios? `${bios.length} item${bios.length>1 ? 's' : ''}`: null}</span></h2>
+      <h2>{title} <span>{isValidData(bios) ? `${bios.length} item${bios.length>1 ? 's' : ''}` : null}</span></h2>
       <Row>
         {displayItems()}
       </Row>

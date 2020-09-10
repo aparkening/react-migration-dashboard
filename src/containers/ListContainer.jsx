@@ -3,23 +3,19 @@ import PropTypes from 'prop-types';
 
 import ListItem from '../components/ListItem';
 
-
 /**
- * Helper function to validate data retrieved from JSON:API.
+ * Display bios in table lists.
+ *
+ * @param {string} title
+ *   Title of list
+  * @param {string} listId
+ *   Id of list
+ * @param {array} bios
+ *   List of bios
+ * @param {function} updateItem
+ *   Function to update status field and move item to another list. Requires drupalId
+ *
  */
-// function isValidData(data) {
-//   if (data === null) {
-//     return false;
-//   }
-//   if (data.data === undefined ||
-//     data.data === null ||
-//     data.data.length === 0 ) {
-//     return false;
-//   }
-//   return true;
-// }
-
-
 function ListContainer(props) {
   const {
     title,
@@ -43,6 +39,9 @@ function ListContainer(props) {
     return true;
   }
 
+  /**
+   * Return ListItem components
+   */
   function displayItems() {
     if (isValidData(bios)) {
       return bios.map(obj => (
@@ -61,10 +60,12 @@ function ListContainer(props) {
     } 
   }
 
+  /**
+   * Display List components with title and count
+   */
   return (
     <div className="list">
-      
-      <h2>{title} <span>{bios? `${bios.length} item${bios.length>1 ? 's' : ''}`: null}</span></h2>
+      <h2>{title} <span>{isValidData(bios) ? `${bios.length} item${bios.length>1 ? 's' : ''}` : null}</span></h2>
       <table className="views-table views-view-table cols-7 responsive-enabled sticky-enabled sticky-table">
         <thead>
           <tr>

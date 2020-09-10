@@ -31,7 +31,6 @@ const Col = styled.article`
  *   Headshot filename. Requires headshotId
  *
  */
-
 function Card(props) {
   const {
     name,
