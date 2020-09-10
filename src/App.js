@@ -1,7 +1,7 @@
 import React from 'react';
 import initialData from './InitialData'; // Test JSON data
 import ListContainer from './containers/ListContainer';
-// import CardContainer from './containers/CardContainer';
+import CardContainer from './containers/CardContainer';
 
 /**
  * Main App
@@ -147,19 +147,29 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        {/* {this.displayLists()} */}
-
         {displayOrder.map((listId) => {
           const list = this.state.lists[listId];
-          // // const bios = list.bioIds.map(bioId => this.state.bioData[bioId]);
-          return (
-            <ListContainer 
-              key={list.id} 
-              title={list.title}
-              bios={list.bioIds}
-              updateItem={this.updateItem} 
-            />
-          );
+          // Display Cards for In Progress
+          if (listId === 'inProgress') {
+            return (
+              <CardContainer 
+                key={list.id} 
+                title={list.title}
+                bios={list.bioIds}
+                updateItem={this.updateItem} 
+                included={this.state.bioIncluded}
+              />
+            );
+          } else {
+            return (
+              <ListContainer 
+                key={list.id} 
+                title={list.title}
+                bios={list.bioIds}
+                updateItem={this.updateItem} 
+              />
+            );
+          }
         })}
       </div>
     );

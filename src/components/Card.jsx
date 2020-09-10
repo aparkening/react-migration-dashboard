@@ -1,5 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const Col = styled.article`
+  flex: 1 1 30%;
+  border: 1px solid grey;
+  margin: 0.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+`;
 
 /**
  * Display an individual bio card.
@@ -53,17 +62,17 @@ function Card(props) {
   */
 
   return (
-    <article>
+    <Col>
       <div className="field field--name-field-headshot field--type-image field__item">  
         <img src={`http://localhost/august/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`} alt={headshotAlt} className="image-style-medium" />
       </div>
       <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">
-        <h2><a href={`/node/${nodeId}`}>{name}</a></h2>
+        <h3><a href={`/node/${nodeId}`}>{name}</a></h3>
         <p>{summary}</p>
 
         <button type="button" onClick={() => { updateItem(drupalId, "list"); }}>Remove from this list</button>
       </div>
-    </article>
+    </Col>
   );
 }
 
