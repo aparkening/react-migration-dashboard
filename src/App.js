@@ -14,12 +14,12 @@ class App extends React.Component {
     this.state = {
       lists: {
         inProgress: {
-          id: 'in-progress',
+          id: 'inProgress',
           title: 'In Progress',
           bioIds: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'In Progress'),
         },
         todo: {
-          id: 'to-do',
+          id: 'todo',
           title: 'To Do',
           bioIds: initialData.data.filter(node => node.attributes.field_2020_migration_status === 'To Do'),
         },
@@ -165,6 +165,7 @@ class App extends React.Component {
               <ListContainer 
                 key={list.id} 
                 title={list.title}
+                listId={list.id}
                 bios={list.bioIds}
                 updateItem={this.updateItem} 
               />

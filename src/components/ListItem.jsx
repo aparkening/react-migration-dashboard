@@ -20,6 +20,7 @@ function ListItem(props) {
     nodeId,
     updateItem,
     drupalId,
+    listId,
   } = props;
 
   return (
@@ -28,12 +29,12 @@ function ListItem(props) {
         <a href={`/node/${nodeId}`}>{name}</a>
       </td>
       <td>
-        <button type="button" onClick={() => { updateItem(drupalId, "card"); }}>Add Next</button>
-        {/*   updateItem={this.updateTask}  */}
+        {console.log(listId)}
+        {listId === 'todo' ? (
+          <button type="button" onClick={() => { updateItem(drupalId, "card"); }}>Add Next</button>
+        ) : ( <span>&nbsp;</span> )
+        }
       </td>
-      {/* <td>
-        <a href={`/node/{$props.nodeId}/edit`}>Edit</a>
-      </td> */}
     </tr>
   );
 }
@@ -47,6 +48,7 @@ ListItem.propTypes = {
   nodeId: PropTypes.number.isRequired,
   drupalId: PropTypes.string.isRequired,
   updateItem: PropTypes.func.isRequired,
+  listId: PropTypes.string.isRequired,
 };
 
 export default ListItem;

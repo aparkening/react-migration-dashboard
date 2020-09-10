@@ -23,6 +23,7 @@ import ListItem from '../components/ListItem';
 function ListContainer(props) {
   const {
     title,
+    listId,
     bios,
     updateItem,
   } = props;
@@ -66,6 +67,7 @@ function ListContainer(props) {
               nodeId={obj.attributes.drupal_internal__nid}
               updateItem={updateItem} 
               drupalId={obj.id}
+              listId={listId}
             />
             );
           })}
@@ -81,6 +83,7 @@ function ListContainer(props) {
  */
 ListContainer.propTypes = {
   title: PropTypes.string.isRequired,
+  listId: PropTypes.string.isRequired,
   bios: PropTypes.array.isRequired,
   updateItem: PropTypes.func.isRequired,
 };
