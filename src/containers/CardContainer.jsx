@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
+import '../App.css';
 import Card from '../components/Card';
 
 const Row = styled.div`
@@ -28,6 +32,7 @@ function CardContainer(props) {
     bios,
     updateItem,
     included,
+    // animate,
   } = props;
 
   /**
@@ -41,17 +46,23 @@ function CardContainer(props) {
           head.id === obj.relationships.field_headshot.data.id
         )).attributes.filename;
         return (
-          <Card
+          <CSSTransition
             key={obj.id}
-            summary={obj.attributes.body.summary}
-            name={obj.attributes.title}
-            nodeId={obj.attributes.drupal_internal__nid}
-            updateItem={updateItem}
-            drupalId={obj.id}
-            headshotId={obj.relationships.field_headshot.data.id}
-            headshotAlt={obj.relationships.field_headshot.data.meta.alt}
-            headshotFilename={file}
-          />
+            timeout={500}
+            classNames="fade"
+          >
+            <Card
+              key={obj.id}
+              summary={obj.attributes.body.summary}
+              name={obj.attributes.title}
+              nodeId={obj.attributes.drupal_internal__nid}
+              updateItem={updateItem}
+              drupalId={obj.id}
+              headshotId={obj.relationships.field_headshot.data.id}
+              headshotAlt={obj.relationships.field_headshot.data.meta.alt}
+              headshotFilename={file}
+            />
+          </CSSTransition>
         );
       });
     }
@@ -70,7 +81,9 @@ function CardContainer(props) {
         <span>{bios.length ? `${bios.length} item${bios.length > 1 ? 's' : ''}` : null}</span>
       </h2>
       <Row>
-        {displayItems()}
+        <TransitionGroup component={null}>
+          {displayItems()}
+        </TransitionGroup>
       </Row>
     </div>
   );

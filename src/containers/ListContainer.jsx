@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
+import '../App.css';
 import ListItem from '../components/ListItem';
 
 /**
@@ -30,14 +34,20 @@ function ListContainer(props) {
   function displayItems() {
     if (bios.length) {
       return bios.map((obj) => (
-        <ListItem
+        <CSSTransition
           key={obj.id}
-          name={obj.attributes.title}
-          nodeId={obj.attributes.drupal_internal__nid}
-          updateItem={updateItem}
-          drupalId={obj.id}
-          listId={listId}
-        />
+          timeout={500}
+          classNames="fade"
+        >
+          <ListItem
+            key={obj.id}
+            name={obj.attributes.title}
+            nodeId={obj.attributes.drupal_internal__nid}
+            updateItem={updateItem}
+            drupalId={obj.id}
+            listId={listId}
+          />
+        </CSSTransition>
       ));
     }
 
@@ -62,7 +72,9 @@ function ListContainer(props) {
           </tr>
         </thead>
         <tbody>
-          {displayItems()}
+          <TransitionGroup component={null}>
+            {displayItems()}
+          </TransitionGroup>
         </tbody>
       </table>
     </div>
