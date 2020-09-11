@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import styled from 'styled-components';
+// import styles from '../App.css';
 
+// const Row = styled.tr`
+// `;
 /**
  * Display an individual bio in table form.
  *
@@ -30,7 +34,14 @@ function ListItem(props) {
       </td>
       <td>
         {listId === 'todo' ? (
-          <button type="button" onClick={() => { updateItem(drupalId, listId, 'inProgress', 'In Progress'); /* drupalId, oldListId, newListId, newMigrationStatus */ }}>Add Next</button>
+          <button
+            type="button"
+            onClick={() => {
+              updateItem(drupalId, listId, 'inProgress', 'In Progress'); /* drupalId, oldListId, newListId, newMigrationStatus */
+            }}
+          >
+            Add Next
+          </button>
         ) : (<span>&nbsp;</span>)}
       </td>
     </tr>

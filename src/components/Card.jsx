@@ -15,7 +15,7 @@ const Col = styled.article`
  *
  * @param {string} name
  *   Full name of bio
-  * @param {string} summary
+ * @param {string} summary
  *   Summary body of bio
  * @param nodeId
  *   drupal_internal__nid of the bio
@@ -25,9 +25,9 @@ const Col = styled.article`
  *   Data id of bio
  * @param headshotId
  *   Headshot object id for locating headshot data
-  * @param headshotAlt
+ * @param headshotAlt
  *   Alt text for headshot. Requires headshotId
-  * @param headshotFilename
+ * @param headshotFilename
  *   Headshot filename. Requires headshotId
  *
  */
@@ -68,7 +68,14 @@ function Card(props) {
       <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">
         <h3><a href={`/node/${nodeId}`}>{name}</a></h3>
         <p>{summary}</p>
-        <button type="button" onClick={() => { updateItem(drupalId, 'inProgress', 'todo', 'To Do'); /* drupalId, oldListId, newListId, newMigrationStatus */ }}>Remove from this list</button>
+        <button
+          type="button"
+          onClick={() => {
+            updateItem(drupalId, 'inProgress', 'todo', 'To Do'); /* drupalId, oldListId, newListId, newMigrationStatus */
+          }}
+        >
+          Remove from this list
+        </button>
       </div>
     </Col>
   );
