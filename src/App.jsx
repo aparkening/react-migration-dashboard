@@ -152,49 +152,62 @@ class App extends React.Component {
     });
   }
 
+
+
+
   /**
    * Patch node with JSON:API
    */
-  fetchUpdate(uuid, status) {
+  fetchUpdate(uuid, newStatus) {
     const url = `/jsonapi/node/bio/${uuid}`;
+    let token;
 
-    fetch(url, {
-      method: 'PATCH',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json',
-      },
-      body: JSON.stringify({
-        data: [
-          {
+    fetch('/session/token?_format=json', {
+      method: 'GET',
+    })
+    .then(response => response.text())
+    .then((responseToken) => {
+      token = responseToken;
+
+      fetch(url, {
+        method: 'PATCH',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json',
+          'X-CSRF-Token': token,
+        },
+        body: JSON.stringify({
+          "data": {
+            "type": 'node--bio',
             "id": uuid,
             "attributes": {
-              "field_2020_migration_status": status,
+              "field_2020_migration_status": newStatus,
             },
           },
-        ],
-      }),
-    }).then((response) => {
-      if (response.ok) {
-        response.json().then((data) => {
-          console.log(data);
-        });
-        // return true;
-      } else {
-        console.log('error updating bio');
-        return false;
-      }
-    });
+        }),
+      }).then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            console.log(data);
+          });
+          // return true;
+        } else {
+          console.log(response);
+        }
+      });
+
+    })
+    .catch(error => console.log('API error', error));
   }
 
   /**
    * Update node status in state and Drupal server
    */
-  updateItem(drupalId, nodeId, oldListId, newListId, newMigrationStatus) {
+  updateItem(drupalId, oldListId, newListId, newMigrationStatus) {
     // Record current data for error reversion
-    const revertedBioData = [...this.state.bioData];
-    const revertedLists = [...this.state.lists];
+    // const revertedBioData = [...this.state.bioData];
+    // const revertedLists = [...this.state.lists];
 
     // Update bioData with new status
     // const updatedBioData = [...this.state.bioData];
@@ -225,16 +238,21 @@ class App extends React.Component {
       },
     });
 
+    console.log('State updated!');
+
     // Update server node
     // If failure, revert to previous state
-    if (this.fetchUpdate(drupalId, newMigrationStatus)) {
-      console.log('UPDATE FAIL');
-      this.setState({
-        ...this.state,
-        bioData: revertedBioData,
-        lists: revertedLists,
-      });
-    }
+    this.fetchUpdate(drupalId, newMigrationStatus);
+
+
+    // if (!this.fetchUpdate(drupalId, newMigrationStatus)) {
+    //   console.log('UPDATE FAIL');
+    //   this.setState({
+    //     ...this.state,
+    //     bioData: revertedBioData,
+    //     lists: revertedLists,
+    //   });
+    // }
   }
 
   /**
