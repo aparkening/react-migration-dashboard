@@ -32,8 +32,8 @@ class App extends React.Component {
     //       title: 'Done',
     //     },
     //   },
-    //   // animate: false,
     // }
+
     this.state = {
       lists: {
         inProgress: {
@@ -57,6 +57,7 @@ class App extends React.Component {
     };
 
     // this.isValidData = this.isValidData.bind(this);
+    // this.fetchItems = this.getchItems.bind(this);
     this.updateItem = this.updateItem.bind(this);
   }
 
@@ -105,6 +106,56 @@ class App extends React.Component {
   //   }
   //   return true;
   // }
+
+  /**
+   * Fetch nodes from JSON:API and populate state.
+   * Display console error if fetch fails.
+   */
+  fetchItems() {
+    // const path = drupalSettings.path.currentPath;
+    // const nodeId = path.split('/')[1]; // Assumes a path of node/123
+
+    fetch('/jsonapi/node/bio?include=field_headshot', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/vnd.api+json'
+      }
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((initialData) => {
+          // Populate state with real data
+          this.setState({
+            bioData: initialData.data,
+            bioIncluded: initialData.included,
+            lists: {
+              inProgress: {
+                ...this.state.lists.inProgress,
+                bios: initialData.data.filter((node) => (
+                node.attributes.field_2020_migration_status === 'In Progress')
+                ),
+              },
+              todo: {
+                ...this.state.lists.todo,
+                bios: initialData.data.filter((node) => (
+                node.attributes.field_2020_migration_status === 'To Do')
+                ),
+              },
+              done: {
+                ...this.state.lists.done,
+                bios: initialData.data.filter((node) => (
+                node.attributes.field_2020_migration_status === 'Done')
+                ),
+              },
+            },
+          });
+        });
+      }
+      else {
+        console.log('error getting data');
+      }
+    });
+  }
 
   /**
    * Update node status in state and Drupal server
