@@ -32,26 +32,22 @@ function ListContainer(props) {
    * Return ListItem components
    */
   function displayItems() {
-    if (bios.length) {
-      return bios.map((obj) => (
-        <CSSTransition
+    return bios.map((obj) => (
+      <CSSTransition
+        key={obj.id}
+        timeout={500}
+        classNames="fade"
+      >
+        <ListItem
           key={obj.id}
-          timeout={500}
-          classNames="fade"
-        >
-          <ListItem
-            key={obj.id}
-            name={obj.attributes.title}
-            nodeId={obj.attributes.drupal_internal__nid}
-            updateItem={updateItem}
-            drupalId={obj.id}
-            listId={listId}
-          />
-        </CSSTransition>
-      ));
-    }
-
-    return <tr><td colSpan="2">No data available.</td></tr>;
+          name={obj.attributes.title}
+          nodeId={obj.attributes.drupal_internal__nid}
+          updateItem={updateItem}
+          drupalId={obj.id}
+          listId={listId}
+        />
+      </CSSTransition>
+    ));
   }
 
   /**
@@ -72,9 +68,11 @@ function ListContainer(props) {
           </tr>
         </thead>
         <tbody>
-          <TransitionGroup component={null}>
-            {displayItems()}
-          </TransitionGroup>
+          {bios.length ? (
+            <TransitionGroup component={null}>
+              {displayItems()}
+            </TransitionGroup>
+          ) : (<tr><td colSpan="2">No data available.</td></tr>)}
         </tbody>
       </table>
     </div>

@@ -39,35 +39,33 @@ function CardContainer(props) {
    * Return Card components with headshot from included array
    */
   function displayItems() {
-    if (bios.length) {
-      return bios.map((obj) => {
-        // debugger
-        const file = included.find((head) => (
-          head.id === obj.relationships.field_headshot.data.id
-        )).attributes.filename;
-        return (
-          <CSSTransition
+    return bios.map((obj) => {
+      // debugger
+      const file = included.find((head) => (
+        head.id === obj.relationships.field_headshot.data.id
+      )).attributes.filename;
+      return (
+        <CSSTransition
+          key={obj.id}
+          timeout={500}
+          classNames="fade"
+        >
+          <Card
             key={obj.id}
-            timeout={500}
-            classNames="fade"
-          >
-            <Card
-              key={obj.id}
-              summary={obj.attributes.body.summary}
-              name={obj.attributes.title}
-              nodeId={obj.attributes.drupal_internal__nid}
-              updateItem={updateItem}
-              drupalId={obj.id}
-              headshotId={obj.relationships.field_headshot.data.id}
-              headshotAlt={obj.relationships.field_headshot.data.meta.alt}
-              headshotFilename={file}
-            />
-          </CSSTransition>
-        );
-      });
-    }
+            summary={obj.attributes.body.summary}
+            name={obj.attributes.title}
+            nodeId={obj.attributes.drupal_internal__nid}
+            updateItem={updateItem}
+            drupalId={obj.id}
+            headshotId={obj.relationships.field_headshot.data.id}
+            headshotAlt={obj.relationships.field_headshot.data.meta.alt}
+            headshotFilename={file}
+          />
+        </CSSTransition>
+      );
+    });
 
-    return <div>No data available.</div>;
+    // return false;
   }
 
   /**
@@ -81,9 +79,11 @@ function CardContainer(props) {
         <span>{bios.length ? `${bios.length} item${bios.length > 1 ? 's' : ''}` : null}</span>
       </h2>
       <Row>
-        <TransitionGroup component={null}>
-          {displayItems()}
-        </TransitionGroup>
+        {bios.length ? (
+          <TransitionGroup component={null}>
+            {displayItems()}
+          </TransitionGroup>
+        ) : (<div>Ready for bios!</div>)}
       </Row>
     </div>
   );
