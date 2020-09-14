@@ -63,7 +63,7 @@ function Card(props) {
   return (
     <Col>
       <div className="field field--name-field-headshot field--type-image field__item">
-        <img src={`http://localhost/august/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`} alt={headshotAlt} className="image-style-medium" />
+        <img src={`/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`} alt={headshotAlt} className="image-style-medium" />
       </div>
       <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">
         <h3><a href={`/node/${nodeId}`}>{name}</a></h3>
