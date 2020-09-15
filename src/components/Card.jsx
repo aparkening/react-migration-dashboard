@@ -53,24 +53,6 @@ function Card(props) {
     headshotFilename,
   } = props;
 
-  /* Display
-    Headshot
-      get data id: InitialData.data.relationships.field_headshot.data.id
-      get meta data:
-        InitialData.data.relationships.field_headshot.data.meta.alt
-
-      Then get
-        - InitialData.included.filter(data from id).attributes.filename
-        - Make own url:
-          /sites/default/files/styles/medium/public/headshots/{filename}
-
-    Title
-    Summary
-
-    Link to node
-    Button to move back to To Do
-  */
-
   return (
     <Col>
       <div className="field field--name-field-headshot field--type-image field__item">
