@@ -3,11 +3,22 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Col = styled.article`
-  flex: 1 1 30%;
+  flex: 1 1 25%;
   border: 1px solid grey;
   margin: 0.5rem;
   padding: 1rem;
   border-radius: 10px;
+  display: flex;
+  & div {
+    flex: 1;
+    padding: 1em;
+  }
+  & div.field--name-body {
+    flex: 2;
+  }
+  & h3 {
+    margin-top: 0;
+  }
 `;
 
 /**
@@ -66,7 +77,7 @@ function Card(props) {
         <img src={`/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`} alt={headshotAlt} className="image-style-medium" />
       </div>
       <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">
-        <h3><a href={`/node/${nodeId}`}>{name}</a></h3>
+        <h3><a href={`/node/${nodeId}`}>{name}</a> <a href={`/node/${nodeId}/edit`}>(Edit)</a></h3>
         <p>{summary}</p>
         <button
           type="button"
@@ -74,7 +85,7 @@ function Card(props) {
             updateItem(drupalId, 'inProgress', 'todo', 'To Do'); /* drupalId, oldListId, newListId, newMigrationStatus */
           }}
         >
-          Remove from this list
+          Move -&gt; To Do
         </button>
       </div>
     </Col>

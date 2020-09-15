@@ -40,7 +40,7 @@ function ListItem(props) {
               updateItem(drupalId, listId, 'inProgress', 'In Progress'); /* drupalId, oldListId, newListId, newMigrationStatus */
             }}
           >
-            Add Next
+            Add -&gt; In Progress
           </button>
         ) : (<span>&nbsp;</span>)}
       </td>
