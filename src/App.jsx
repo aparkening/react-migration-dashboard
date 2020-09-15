@@ -2,6 +2,7 @@ import React from 'react';
 // import initialData from './InitialData'; // Test JSON data
 import ListContainer from './containers/ListContainer';
 import CardContainer from './containers/CardContainer';
+import Alert from './components/Alert';
 
 /**
  * Display Migration Dashboard
@@ -16,6 +17,7 @@ class App extends React.Component {
 
     // Set initial state
     this.state = {
+      alert: '',
       bioData: [],
       bioIncluded: [],
       lists: {
@@ -34,64 +36,38 @@ class App extends React.Component {
       },
     };
 
-    // this.state = {
-    //   lists: {
-    //     inProgress: {
-    //       id: 'inProgress',
-    //       title: 'In Progress',
-    //       bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'In Progress'),
-    //     },
-    //     todo: {
-    //       id: 'todo',
-    //       title: 'To Do',
-    //       bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'To Do'),
-    //     },
-    //     done: {
-    //       id: 'done',
-    //       title: 'Done',
-    //       bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'Done'),
-    //     },
-    //   },
-    //   bioData: initialData.data,
-    //   bioIncluded: initialData.included,
-    // };
+    /* 
+    * Uncomment when working locally
+    this.state = {
+      alert: '',
+      bioData: initialData.data,
+      bioIncluded: initialData.included,
+      lists: {
+        inProgress: {
+          id: 'inProgress',
+          title: 'In Progress',
+          bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'In Progress'),
+        },
+        todo: {
+          id: 'todo',
+          title: 'To Do',
+          bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'To Do'),
+        },
+        done: {
+          id: 'done',
+          title: 'Done',
+          bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'Done'),
+        },
+      },
+    };
+    */
 
     this.isValidData = this.isValidData.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.fetchUpdate = this.fetchUpdate.bind(this);
+    this.slowChangeAlert = this.slowChangeAlert.bind(this);
 
     this.fetchItems(); // Populate state from fetch
-  }
-
-  /**
-   * Populate state from Drupal's JSON:API
-   * Fill bios array by field_2020_migration_status
-   */
-  componentDidMount() {
-    // this.setState({
-    //   bioData: initialData.data,
-    //   bioIncluded: initialData.included,
-    //   lists: {
-    //     inProgress: {
-    //       ...this.state.lists.inProgress,
-    //       bios: initialData.data.filter((node) => (
-    //        node.attributes.field_2020_migration_status === 'In Progress')
-    //       ),
-    //     },
-    //     todo: {
-    //       ...this.state.lists.todo,
-    //       bios: initialData.data.filter((node) => (
-    //        node.attributes.field_2020_migration_status === 'To Do')
-    //       ),
-    //     },
-    //     done: {
-    //       ...this.state.lists.done,
-    //       bios: initialData.data.filter((node) => (
-    //        node.attributes.field_2020_migration_status === 'Done')
-    //       ),
-    //     },
-    //   },
-    // });
   }
 
   /**
@@ -103,7 +79,7 @@ class App extends React.Component {
     }
     if (data.data === undefined
       || data.data === null
-      || data.data.length === 0 ) {
+      || data.data.length === 0) {
       return false;
     }
     return true;
@@ -114,62 +90,68 @@ class App extends React.Component {
    * Display console error if fetch fails.
    */
   fetchItems() {
-    fetch('/jsonapi/node/bio?include=field_headshot', {
+    // const url = 'https://test.com/alittlebithidden/437/jsonapi/node/bio?include=field_headshot'; // Failure url for local testing
+    const url = '/alittlebithidden/437/jsonapi/node/bio?include=field_headshot';
+
+    // Fetch all bios with headshots
+    fetch(url, {
       method: 'GET',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/vnd.api+json',
       },
-    }).then((response) => {
-      if (response.ok) {
-        response.json().then((data) => {
-          // Populate state with real data
-          this.setState({
-            bioData: data.data,
-            bioIncluded: data.included,
-            lists: {
-              inProgress: {
-                ...this.state.lists.inProgress,
-                bios: data.data.filter((node) => (
-                  node.attributes.field_2020_migration_status === 'In Progress')),
-              },
-              todo: {
-                ...this.state.lists.todo,
-                bios: data.data.filter((node) => (
-                  node.attributes.field_2020_migration_status === 'To Do')),
-              },
-              done: {
-                ...this.state.lists.done,
-                bios: data.data.filter((node) => (
-                  node.attributes.field_2020_migration_status === 'Done')),
-              },
-            },
-          });
-        });
-      } else {
-        console.log('error getting bios');
-      }
-    });
+    })
+      .then((response) => {
+        if (response.ok) {
+          response.json()
+            .then((data) => {
+              if (this.isValidData(data)) {
+                // Populate state with real data
+                this.setState({
+                  bioData: data.data,
+                  bioIncluded: data.included,
+                  lists: {
+                    inProgress: {
+                      ...this.state.lists.inProgress,
+                      bios: data.data.filter((node) => (
+                        node.attributes.field_2020_migration_status === 'In Progress')),
+                    },
+                    todo: {
+                      ...this.state.lists.todo,
+                      bios: data.data.filter((node) => (
+                        node.attributes.field_2020_migration_status === 'To Do')),
+                    },
+                    done: {
+                      ...this.state.lists.done,
+                      bios: data.data.filter((node) => (
+                        node.attributes.field_2020_migration_status === 'Done')),
+                    },
+                  },
+                });
+              }
+            });
+        } else {
+          throw Error(response.statusText);
+        }
+      })
+      .catch((error) => console.log('Initial GET API error', error));
   }
-
-
-
 
   /**
    * Patch node with JSON:API
+   * Return true if successful patch. Console log errors.
    */
   fetchUpdate(uuid, newStatus) {
-    const url = `/jsonapi/node/bio/${uuid}`;
+    const tokenUrl = '/session/token?_format=json';
+    // const patchUrl = `https://test.com/alittlebithidden/437/jsonapi/node/bio/${uuid}`; // Failure url for local testing
+    const patchUrl = `/alittlebithidden/437/jsonapi/node/bio/${uuid}`;
     let token;
+    let success = false; // return false if patch fails
 
-    fetch('/session/token?_format=json', {
-      method: 'GET',
-    })
-    .then(response => response.text())
-    .then((responseToken) => {
+    // Helper function to patch bio
+    function patchBio(responseToken) {
       token = responseToken;
-
-      fetch(url, {
+      fetch(patchUrl, {
         method: 'PATCH',
         credentials: 'same-origin',
         headers: {
@@ -178,39 +160,47 @@ class App extends React.Component {
           'X-CSRF-Token': token,
         },
         body: JSON.stringify({
-          "data": {
-            "type": 'node--bio',
-            "id": uuid,
-            "attributes": {
-              "field_2020_migration_status": newStatus,
+          'data': {
+            'type': 'node--bio',
+            'id': uuid,
+            'attributes': {
+              'field_2020_migration_status': newStatus,
             },
           },
         }),
-      }).then((response) => {
-        if (response.ok) {
-          response.json().then((data) => {
-            console.log(data);
-          });
-          // return true;
-        } else {
-          console.log(response);
-        }
-      });
+      })
+        .then((response) => {
+          if (response.ok) {
+            success = true;
+          } else {
+            throw Error(response.statusText);
+          }
+        })
+        .catch((error) => console.log('API Patch error', error));
+    }
 
+    // Get token and patch bio
+    fetch(tokenUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.api+json',
+      },
     })
-    .catch(error => console.log('API error', error));
+      .then((response) => response.text())
+      .then((responseToken) => {
+        // Patch with responseToken
+        patchBio(responseToken);
+      })
+      .catch((error) => console.log('API Token error', error));
+
+    return success;
   }
 
   /**
    * Update node status in state and Drupal server
    */
   updateItem(drupalId, oldListId, newListId, newMigrationStatus) {
-    // Record current data for error reversion
-    // const revertedBioData = [...this.state.bioData];
-    // const revertedLists = [...this.state.lists];
-
     // Update bioData with new status
-    // const updatedBioData = [...this.state.bioData];
     const { bioData } = this.state;
     const updatedBio = bioData.find((node) => node.id === drupalId);
     updatedBio.attributes.field_2020_migration_status = newMigrationStatus;
@@ -219,6 +209,8 @@ class App extends React.Component {
     const updatedOldList = this.state.lists[oldListId].bios.filter((node) => node.id !== drupalId);
 
     // Update state
+    // Remove from old list and
+    // Add to new list
     this.setState({
       ...this.state,
       bioData,
@@ -238,21 +230,36 @@ class App extends React.Component {
       },
     });
 
-    console.log('State updated!');
-
     // Update server node
-    // If failure, revert to previous state
-    this.fetchUpdate(drupalId, newMigrationStatus);
+    // If failure, revert to previous state and inform user
+    if (!this.fetchUpdate(drupalId, newMigrationStatus)) {
+      this.setState({
+        ...this.state,
+        alert: "Node couldn't be updated on the server.",
+      });
+    }
+  }
 
+  /**
+   * Helper function to slowly fade alerts.
+   */
+  slowChangeAlert() {
+    if (this.state.alert.length > 0) {
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          alert: '',
+        });
+      }, 5000);
 
-    // if (!this.fetchUpdate(drupalId, newMigrationStatus)) {
-    //   console.log('UPDATE FAIL');
-    //   this.setState({
-    //     ...this.state,
-    //     bioData: revertedBioData,
-    //     lists: revertedLists,
-    //   });
-    // }
+      return (
+        <Alert
+          message={this.state.alert}
+          type="danger"
+        />
+      );
+    }
+    return false;
   }
 
   /**
@@ -265,9 +272,9 @@ class App extends React.Component {
   render() {
     // Display order of status lists
     const displayOrder = ['inProgress', 'todo', 'done'];
-
     return (
       <div className="App">
+        {this.slowChangeAlert()}
         {displayOrder.map((listId) => {
           const list = this.state.lists[listId];
           // Display Cards for In Progress
