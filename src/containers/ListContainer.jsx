@@ -58,7 +58,7 @@ function ListContainer(props) {
       <h2>
         {title}
         {' '}
-        <span>{bios.length ? `${bios.length} item${bios.length > 1 ? 's' : ''}` : null}</span>
+        <span>{bios.length ? `(${bios.length} item${bios.length > 1 ? 's' : ''})` : null})</span>
       </h2>
       <table className="views-table views-view-table cols-7 responsive-enabled sticky-enabled sticky-table">
         <thead>
@@ -72,7 +72,7 @@ function ListContainer(props) {
             <TransitionGroup component={null}>
               {displayItems()}
             </TransitionGroup>
-          ) : (<tr><td colSpan="2">No data available.</td></tr>)}
+          ) : (<tr><td colSpan="2">No bios with this status.</td></tr>)}
         </tbody>
       </table>
     </div>

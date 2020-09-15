@@ -40,7 +40,6 @@ function CardContainer(props) {
    */
   function displayItems() {
     return bios.map((obj) => {
-      // debugger
       const file = included.find((head) => (
         head.id === obj.relationships.field_headshot.data.id
       )).attributes.filename;
@@ -76,7 +75,7 @@ function CardContainer(props) {
       <h2>
         {title}
         {' '}
-        <span>{bios.length ? `${bios.length} item${bios.length > 1 ? 's' : ''}` : null}</span>
+        <span>{bios.length ? `(${bios.length} item${bios.length > 1 ? 's' : ''})` : null})</span>
       </h2>
       <Row>
         {bios.length ? (
