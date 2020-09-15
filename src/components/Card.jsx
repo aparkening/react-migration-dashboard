@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Col = styled.article`
-  flex: 1 1 25%;
+  flex: 1 1 30%;
   border: 1px solid grey;
   margin: 0.5rem;
   padding: 1rem;
