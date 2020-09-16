@@ -13,7 +13,8 @@ Features:
 - An alert component displays for 5 seconds if patch fails
 - Items visually fade in and out when moved
 - AirBnB-based linting configuration: https://github.com/airbnb/javascript/tree/master/react
-- Styling generally in components for portability
+- Minimal styling to take advantage of container's administrative theme
+- Card styling for In Progress list is in components for portability
 
 ## Local Installation
 1. Install app
