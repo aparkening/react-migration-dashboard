@@ -1,50 +1,56 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Migration Dashboard
 
-## Installation
+This dashboard is a React-based proof-of-concept tool to help authors track content status admist a large editorial migration project. This isn't intended to be a permanent addition to a site, but rather an assist for the duration of the internal project. 
 
+The sample content is biographies of well-known chefs in the Portland, Maine restaurant scene.
+
+Features:
+- Initial state is populated by a JSON fetch
+- Moving an item updates state and patches the bio entity on the server 
+- Items fade in and out when moved
+- An alert component displays for 5 seconds if patch fails
+- AirBnB-based linting configuration: https://github.com/airbnb/javascript/tree/master/react
+
+## Local Installation
 1. Install app
 ```
     $ yarn install 
     or 
     $ npm install
 ```
-2. Start server, which will also open [http://localhost:3000](http://localhost:3000) in your browser. The page will reload if you make edits. You will also see any lint errors in the console.
+2. To interact locally:
+- Swap comments with live and test url variables in the `src/App.jsx` fetch methods.
+-  Uncomment the `src/App.jsx` initialData import to grab local data. Then swap comments with live and test `this.state` in the constructor.
+-  Change the img src to be `/images/${headshotFilename}` in `src/components/Card.jsx`.
+
+3. Start server, which will also open [http://localhost:3000](http://localhost:3000) in your browser. The page will reload if you make edits. You will also see basic lint errors in the console.
 ```
     $ yarn start 
     or 
     $ npm start
 ```
 
-## Available Scripts
+4. Manually lint files using the AirBnB eslint configuration using `npx eslint <file>`. For example:
+```
+    npx eslint src/components/ListItem.jsx
+```
 
-In the project directory, you can run:
+## Executable Installation
+1. Build optimized app to run on non-Node.js servers. App will be in production `build` folder. 
+```
+    $ yarn build 
+    or 
+    $ npm run build
+```
 
-### `yarn test`
+2. To place inside a Drupal module, for example, move the files and folders from `/static` to your corresponding module locations.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Place a React-specific html tag where you want to see the dashboard. For example:
+```
+  <div id="react-app">React code goes here.</div>
+```
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
+## Learn More About React
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
