@@ -2,6 +2,8 @@
 
 Migration Dashboard is a React-based proof-of-concept tool to help authors track content status amidst a large editorial migration project. This isn't intended to be a permanent addition to a site, but rather an assistant for the duration of the internal project. 
 
+<img src="/public/images/dashboard-screenshot.png" alt="Migration Dashboard screen" />
+
 The sample content is biographies of well-known chefs in the Portland, Maine restaurant scene.
 
 Features:
