@@ -36,7 +36,7 @@ class App extends React.Component {
       },
     };
 
-    /* 
+    /*
     * Uncomment when working locally
     this.state = {
       alert: '',
@@ -141,103 +141,93 @@ class App extends React.Component {
    * Patch node with JSON:API
    * Return true if successful patch. Console log errors.
    */
-  fetchUpdate(uuid, newStatus) {
-    const tokenUrl = '/session/token?_format=json';
-    // const patchUrl = `https://test.com/alittlebithidden/437/jsonapi/node/bio/${uuid}`; // Failure url for local testing
-    const patchUrl = `/alittlebithidden/437/jsonapi/node/bio/${uuid}`;
-    let token;
-    let success = false; // return false if patch fails
+  fetchUpdate(drupalId, oldListId, newListId, newMigrationStatus) {
+    // Update bioData with new status
+    const { bioData } = this.state;
+    const thisBio = bioData.find((node) => node.id === drupalId);
+    // const revertedStatus = thisBio.attributes.field_2020_migration_status;
+    thisBio.attributes.field_2020_migration_status = newMigrationStatus;
 
-    // Helper function to patch bio
-    function patchBio(responseToken) {
-      token = responseToken;
-      fetch(patchUrl, {
-        method: 'PATCH',
-        credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'X-CSRF-Token': token,
-        },
-        body: JSON.stringify({
-          'data': {
-            'type': 'node--bio',
-            'id': uuid,
-            'attributes': {
-              'field_2020_migration_status': newStatus,
-            },
-          },
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            success = true;
-          } else {
-            throw Error(response.statusText);
-          }
-        })
-        .catch((error) => console.log('API Patch error', error));
-    }
+    // Remove item from old list
+    const updatedOldList = this.state.lists[oldListId].bios.filter((node) => node.id !== drupalId);
+
+    const tokenUrl = '/session/token?_format=json';
+    // const patchUrl = `https://test.com/alittlebithidden/437/jsonapi/node/bio/${drupalId}`; // Failure url for local testing
+    const patchUrl = `/alittlebithidden/437/jsonapi/node/bio/${drupalId}`;
+    let token;
 
     // Get token and patch bio
     fetch(tokenUrl, {
       method: 'GET',
       headers: {
-        'Accept': 'application/vnd.api+json',
+        Accept: 'application/vnd.api+json',
       },
     })
       .then((response) => response.text())
       .then((responseToken) => {
         // Patch with responseToken
-        patchBio(responseToken);
+        token = responseToken;
+        fetch(patchUrl, {
+          method: 'PATCH',
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/vnd.api+json',
+            'Content-Type': 'application/vnd.api+json',
+            'X-CSRF-Token': token,
+          },
+          body: JSON.stringify({
+            'data': {
+              'type': 'node--bio',
+              'id': drupalId,
+              'attributes': {
+                'field_2020_migration_status': newMigrationStatus,
+              },
+            },
+          }),
+        })
+          .then((patchResponse) => {
+            if (!patchResponse.ok) {
+            // Alert user to failure
+              this.setState({
+                ...this.state,
+                alert: "Node couldn't be updated on the server.",
+              });
+              throw Error(patchResponse.statusText);
+            }
+            // Update state
+            // Remove from old list and
+            // Add to new list
+            this.setState({
+              ...this.state,
+              bioData,
+              lists: {
+                ...this.state.lists,
+                [oldListId]: {
+                  ...this.state.lists[oldListId],
+                  bios: updatedOldList,
+                },
+                [newListId]: {
+                  ...this.state.lists[newListId],
+                  bios: [
+                    ...this.state.lists[newListId].bios,
+                    thisBio,
+                  ],
+                },
+              },
+            });
+          })
+          .catch((error) => console.log('API Patch error', error));
       })
       .catch((error) => console.log('API Token error', error));
-
-    return success;
   }
 
   /**
    * Update node status in state and Drupal server
    */
   updateItem(drupalId, oldListId, newListId, newMigrationStatus) {
-    // Update bioData with new status
-    const { bioData } = this.state;
-    const updatedBio = bioData.find((node) => node.id === drupalId);
-    updatedBio.attributes.field_2020_migration_status = newMigrationStatus;
-
-    // Remove item from old list
-    const updatedOldList = this.state.lists[oldListId].bios.filter((node) => node.id !== drupalId);
-
-    // Update state
-    // Remove from old list and
-    // Add to new list
-    this.setState({
-      ...this.state,
-      bioData,
-      lists: {
-        ...this.state.lists,
-        [oldListId]: {
-          ...this.state.lists[oldListId],
-          bios: updatedOldList,
-        },
-        [newListId]: {
-          ...this.state.lists[newListId],
-          bios: [
-            ...this.state.lists[newListId].bios,
-            updatedBio,
-          ],
-        },
-      },
-    });
-
     // Update server node
-    // If failure, revert to previous state and inform user
-    if (!this.fetchUpdate(drupalId, newMigrationStatus)) {
-      this.setState({
-        ...this.state,
-        alert: "Node couldn't be updated on the server.",
-      });
-    }
+    // Only update state on success
+    this.fetchUpdate(drupalId, oldListId, newListId, newMigrationStatus);
   }
 
   /**
