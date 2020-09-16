@@ -75,7 +75,7 @@ function CardContainer(props) {
       <h2>
         {title}
         {' '}
-        <span>{bios.length ? `(${bios.length} item${bios.length > 1 ? 's' : ''})` : null})</span>
+        <span>{bios.length ? `(${bios.length} item${bios.length > 1 ? 's' : ''})` : null}</span>
       </h2>
       <Row>
         {bios.length ? (
