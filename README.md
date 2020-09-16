@@ -1,14 +1,15 @@
 # React Migration Dashboard
 
-This dashboard is a React-based proof-of-concept tool to help authors track content status admist a large editorial migration project. This isn't intended to be a permanent addition to a site, but rather an assist for the duration of the internal project. 
+Migration Dashboard is a React-based proof-of-concept tool to help authors track content status amidst a large editorial migration project. This isn't intended to be a permanent addition to a site, but rather an assistant for the duration of the internal project. 
 
 The sample content is biographies of well-known chefs in the Portland, Maine restaurant scene.
 
 Features:
 - Initial state is populated by a JSON fetch
 - Moving an item updates state and patches the bio entity on the server 
-- Items fade in and out when moved
+- Patches are more secure using a session token
 - An alert component displays for 5 seconds if patch fails
+- Items visually fade in and out when moved
 - AirBnB-based linting configuration: https://github.com/airbnb/javascript/tree/master/react
 
 ## Local Installation
