@@ -45,7 +45,7 @@ Features:
     $ npm run build
 ```
 
-2. To place inside a Drupal module, for example, move the files and folders from `/static` to your corresponding module locations.
+2. To place inside a Drupal module, for example, move the files and folders from `build/static` to your corresponding module location.
 
 3. Place a React-specific html tag where you want to see the dashboard. For example:
 ```
