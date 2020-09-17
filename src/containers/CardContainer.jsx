@@ -11,6 +11,24 @@ import Card from '../components/Card';
 const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
+  //When element enters dom */
+  .fade-enter {
+    opacity: 0;
+  }
+  /* After element enters [transition time] */
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+  /* When state turns false */
+  .fade-exit {
+    opacity: 1;
+  }
+  /* Right after exit [transition time] */
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+  }
 `;
 
 /**

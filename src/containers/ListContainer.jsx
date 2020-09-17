@@ -1,11 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
 import '../App.css';
 import ListItem from '../components/ListItem';
+
+const Row = styled.div`
+  margin-top: 3em;
+  //When element enters dom */
+  .fade-enter {
+    opacity: 0;
+  }
+  /* After element enters [transition time] */
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+  /* When state turns false */
+  .fade-exit {
+    opacity: 1;
+  }
+  /* Right after exit [transition time] */
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+  }
+`;
 
 /**
  * Display bios in table lists.
@@ -54,7 +77,7 @@ function ListContainer(props) {
    * Display List components with title and count
    */
   return (
-    <div className="list">
+    <Row>
       <h2>
         {title}
         {' '}
@@ -75,7 +98,7 @@ function ListContainer(props) {
           ) : (<tr><td colSpan="2">No bios with this status.</td></tr>)}
         </tbody>
       </table>
-    </div>
+    </Row>
   );
 }
 
