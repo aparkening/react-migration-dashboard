@@ -7,9 +7,8 @@ import {
 } from 'react-transition-group'; 
 import Card from '../components/Card';
 
-const Row = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+const Container = styled.div`
+  margin-top: 3em;
   //When element enters dom */
   .fade-enter {
     opacity: 0;
@@ -28,6 +27,10 @@ const Row = styled.div`
     opacity: 0;
     transition: opacity 500ms ease-in;
   }
+`;
+const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 /**
@@ -88,7 +91,7 @@ function CardContainer(props) {
    * Display Card components with title and count
    */
   return (
-    <div className="list">
+    <Container>
       <h2>
         {title}
         {' '}
@@ -101,7 +104,7 @@ function CardContainer(props) {
           </TransitionGroup>
         ) : (<div>Ready for bios!</div>)}
       </Row>
-    </div>
+    </Container>
   );
 }
 

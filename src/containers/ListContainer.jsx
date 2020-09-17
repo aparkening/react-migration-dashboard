@@ -7,7 +7,7 @@ import {
 } from 'react-transition-group';
 import ListItem from '../components/ListItem';
 
-const Row = styled.div`
+const Container = styled.div`
   margin-top: 3em;
   //When element enters dom */
   .fade-enter {
@@ -76,7 +76,7 @@ function ListContainer(props) {
    * Display List components with title and count
    */
   return (
-    <Row>
+    <Container>
       <h2>
         {title}
         {' '}
@@ -97,7 +97,7 @@ function ListContainer(props) {
           ) : (<tr><td colSpan="2">No bios with this status.</td></tr>)}
         </tbody>
       </table>
-    </Row>
+    </Container>
   );
 }
 
