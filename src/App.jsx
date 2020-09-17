@@ -1,8 +1,26 @@
 import React from 'react';
-// import initialData from './InitialData'; // Test JSON data
+/*
+* Switch production/local
+*/
+// import initialData from './InitialData'; // Local JSON data
 import ListContainer from './containers/ListContainer';
 import CardContainer from './containers/CardContainer';
 import Alert from './components/Alert';
+
+/**
+ * Helper function to validate data retrieved from JSON:API.
+ */
+function isValidData(data) {
+  if (data === null) {
+    return false;
+  }
+  if (data.data === undefined
+    || data.data === null
+    || data.data.length === 0) {
+    return false;
+  }
+  return true;
+}
 
 /**
  * Display Migration Dashboard
@@ -15,7 +33,10 @@ class App extends React.Component {
   constructor() {
     super();
 
-    // Set initial state
+    /*
+    * Switch production/local
+    */
+    // Production
     this.state = {
       alert: '',
       bioData: [],
@@ -36,8 +57,8 @@ class App extends React.Component {
       },
     };
 
+    // Local
     /*
-    * Uncomment when working locally
     this.state = {
       alert: '',
       bioData: initialData.data,
@@ -62,7 +83,6 @@ class App extends React.Component {
     };
     */
 
-    this.isValidData = this.isValidData.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.fetchUpdate = this.fetchUpdate.bind(this);
     this.slowChangeAlert = this.slowChangeAlert.bind(this);
@@ -71,27 +91,18 @@ class App extends React.Component {
   }
 
   /**
-   * Helper function to validate data retrieved from JSON:API.
-   */
-  isValidData(data) {
-    if (data === null) {
-      return false;
-    }
-    if (data.data === undefined
-      || data.data === null
-      || data.data.length === 0) {
-      return false;
-    }
-    return true;
-  }
-
-  /**
    * Fetch nodes from JSON:API and populate state.
-   * Display console error if fetch fails.
+   * Display errors in console log.
    */
   fetchItems() {
-    // const url = 'https://test.com/alittlebithidden/437/jsonapi/node/bio?include=field_headshot'; // Failure url for local testing
+    /*
+    * Switch production/local
+    */
+    // Production
     const url = '/alittlebithidden/437/jsonapi/node/bio?include=field_headshot';
+
+    // Local
+    // const url = 'https://test.com/alittlebithidden/437/jsonapi/node/bio?include=field_headshot';
 
     // Fetch all bios with headshots
     fetch(url, {
@@ -105,7 +116,7 @@ class App extends React.Component {
         if (response.ok) {
           response.json()
             .then((data) => {
-              if (this.isValidData(data)) {
+              if (isValidData(data)) {
                 // Populate state with real data
                 this.setState({
                   bioData: data.data,
@@ -139,7 +150,8 @@ class App extends React.Component {
 
   /**
    * Patch node with JSON:API
-   * Return true if successful patch. Console log errors.
+   * Update state on successful patch.
+   * Display errors in Alert component console log.
    */
   fetchUpdate(drupalId, oldListId, newListId, newMigrationStatus) {
     // Update bioData with new status
@@ -151,9 +163,40 @@ class App extends React.Component {
     // Remove item from old list
     const updatedOldList = this.state.lists[oldListId].bios.filter((node) => node.id !== drupalId);
 
+    /*
+    * Switch production/local
+    */
+    // Production
     const tokenUrl = '/session/token?_format=json';
-    // const patchUrl = `https://test.com/alittlebithidden/437/jsonapi/node/bio/${drupalId}`; // Failure url for local testing
     const patchUrl = `/alittlebithidden/437/jsonapi/node/bio/${drupalId}`;
+
+    // Local
+    // const tokenUrl = `https://test.com/alittlebithidden/session/token`;
+    // const patchUrl = `https://test.com/alittlebithidden/437/jsonapi/node/bio/${drupalId}`;
+    // Update state
+    // Remove from old list and
+    // Add to new list
+    /*
+    this.setState({
+      ...this.state,
+      bioData,
+      lists: {
+        ...this.state.lists,
+        [oldListId]: {
+          ...this.state.lists[oldListId],
+          bios: updatedOldList,
+        },
+        [newListId]: {
+          ...this.state.lists[newListId],
+          bios: [
+            ...this.state.lists[newListId].bios,
+            thisBio,
+          ],
+        },
+      },
+    });
+    */
+
     let token;
 
     // Get token and patch bio
@@ -171,7 +214,7 @@ class App extends React.Component {
           method: 'PATCH',
           credentials: 'same-origin',
           headers: {
-            'Accept': 'application/vnd.api+json',
+            Accept: 'application/vnd.api+json',
             'Content-Type': 'application/vnd.api+json',
             'X-CSRF-Token': token,
           },
@@ -264,6 +307,7 @@ class App extends React.Component {
     const displayOrder = ['inProgress', 'todo', 'done'];
     return (
       <div className="App">
+
         {this.slowChangeAlert()}
         {displayOrder.map((listId) => {
           const list = this.state.lists[listId];
