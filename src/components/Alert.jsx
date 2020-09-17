@@ -1,5 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const Notify = styled.div`
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+
+  &.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+`;
 
 /**
  * Display an alert.
@@ -17,9 +32,9 @@ function Alert(props) {
   } = props;
 
   return (
-    <div className={`alert alert-${type}`} role="alert">
+    <Notify className={`alert-${type}`} role="alert">
       {message}
-    </div>
+    </Notify>
   );
 }
 
