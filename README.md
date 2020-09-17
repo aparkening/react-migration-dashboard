@@ -14,7 +14,7 @@ Features:
 - An alert displays for 5 seconds if patch fails
 - Items visually fade in and out when moved
 - Minimal styling to take advantage of Drupal administrative theme
-- In Progress card styling is in the component for better portability
+- All CSS bundled in components for portability
 - Code linted with AirBnB's configuration: https://github.com/airbnb/javascript/tree/master/react
 
 ## Motivation
@@ -62,7 +62,7 @@ This idea came from a real-world client scenario. A friend's current project inv
     $ npm run build
 ```
 
-3. To add to the Drupal Migration Dashboard Drupal module, copy the js and css files from `build/static` to your the module's root CSS and js folders. Rename the css file `fade.css`.
+3. Copy all js files in `build/static/js` to the Drupal Migration Dashboard Drupal module's `js` folder.
 
 4. Clear caches and navigate to the Drupal installation's migration dashboard URL. 
 
