@@ -19,6 +19,9 @@ const Col = styled.article`
   & h3 {
     margin-top: 0;
   }
+  & img.match-image-style {
+    width: 100px;
+  }
 `;
 
 /**
@@ -56,10 +59,22 @@ function Card(props) {
   return (
     <Col>
       <div className="field field--name-field-headshot field--type-image field__item">
-        <img src={`/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`} alt={headshotAlt} className="image-style-medium" />
+        {/* Switch production/local */}
+        {/* <img
+          src={`/images/${headshotFilename}`}
+          alt={headshotAlt} className="match-image-style"
+        /> */}
+        <img
+          src={`/sites/default/files/styles/thumbnail/public/headshots/${headshotFilename}`}
+          alt={headshotAlt}
+        />
       </div>
       <div className="clearfix text-formatted field field--name-body field--type-text-with-summary field__item">
-        <h3><a href={`/node/${nodeId}`}>{name}</a> <a href={`/node/${nodeId}/edit`}>(Edit)</a></h3>
+        <h3>
+          <a href={`/node/${nodeId}`}>{name}</a>
+          &nbsp;
+          <a href={`/node/${nodeId}/edit`}>(Edit)</a>
+        </h3>
         <p>{summary}</p>
         <button
           type="button"
