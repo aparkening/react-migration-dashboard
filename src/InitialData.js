@@ -152,7 +152,7 @@ const initialData = {
           "processed": "<p>As a child she worked in her family’s nearby restaurant, and like many others from rural towns, she thought she would have to leave to find success. Instead, she found it with a supper club she hosted in a Belfast apartment. She turned the supper club into an acclaimed but short-lived restaurant, its run and her culinary ascension cut short by a bitter divorce. Locked out of her restaurant and apartment, the only thing she retained from the business was its name: <a href=\"https://www.findthelostkitchen.com/\">the Lost Kitchen</a>. Then one of the farmers she knew from her Belfast restaurant told her that the old Freedom mill, which had recently been renovated, needed a tenant. “I saw the place, and I said, ‘Oh, my god. I can see a future here,’” French says. “I just started to dream about the space.” When she opened in July 2014 in the grist mill that was on its own second life, her customers were waiting. Now, reservations for the prix-fixe dinners are secured by a raffle system. This year 20,000 people mailed postcards to the restaurant during a two-week stretch in April for a chance at a seating. In its fifth year, the restaurant is a “well-oiled machine,” French says. “I feel like I’ve found this little bit of perfection and we got it and we know what it is and I don’t want to lose it.” She can’t imagine running her restaurant anywhere else. “To me, Maine has always been home and has always been the place that’s made me feel loved,” she says. “I feel like I can be my true self here.”</p>\n\n<p>Source: <a href=\"https://www.themainemag.com/people/erin-french-chef-of-the-lost-kitchen/#close\">https://www.themainemag.com/people/erin-french-chef-of-the-lost-kitchen</a></p>",
           "summary": "Erin French grew up down the road from a crumbling grist mill in Freedom."
         },
-        "field_2020_migration_status": "Done"
+        "field_2020_migration_status": "To Do"
       },
       "relationships": {
         "node_type": {
@@ -1087,10 +1087,10 @@ const initialData = {
       "attributes": {
         "drupal_internal__fid": 19,
         "langcode": "en",
-        "filename": "erin_0.jpg",
+        "filename": "erin.jpg",
         "uri": {
-          "value": "public://headshots/erin_0.jpg",
-          "url": "/august/sites/default/files/headshots/erin_0.jpg"
+          "value": "public://headshots/erin.jpg",
+          "url": "/august/sites/default/files/headshots/erin.jpg"
         },
         "filemime": "image/jpeg",
         "filesize": 44586,
@@ -1126,10 +1126,10 @@ const initialData = {
       "attributes": {
         "drupal_internal__fid": 14,
         "langcode": "en",
-        "filename": "vien_0.jpg",
+        "filename": "vien.jpg",
         "uri": {
-          "value": "public://headshots/vien_0.jpg",
-          "url": "/august/sites/default/files/headshots/vien_0.jpg"
+          "value": "public://headshots/vien.jpg",
+          "url": "/august/sites/default/files/headshots/vien.jpg"
         },
         "filemime": "image/jpeg",
         "filesize": 45848,
