@@ -5,7 +5,6 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
-import '../App.css';
 import ListItem from '../components/ListItem';
 
 const Row = styled.div`

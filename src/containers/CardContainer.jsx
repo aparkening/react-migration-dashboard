@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import {
   CSSTransition,
   TransitionGroup,
-} from 'react-transition-group';
-import '../App.css';
+} from 'react-transition-group'; 
 import Card from '../components/Card';
 
 const Row = styled.div`
