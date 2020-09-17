@@ -64,7 +64,11 @@ This idea came from a real-world client scenario. A friend's current project inv
 
 3. Copy all js files in `build/static/js` to the Drupal Migration Dashboard Drupal module's `js` folder.
 
-4. Clear caches and navigate to the Drupal installation's migration dashboard URL. 
+4. Update js filenames to match new files in Drupal Migration Dashboard module's `.libraries.yml`. 
+
+5. Clear Drupal caches.
+
+6. Visit Drupal Migration Dashboard URL. 
 
 ## More About React
 
