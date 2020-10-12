@@ -56,161 +56,145 @@ class App extends React.Component {
         },
       },
     };
-
     // Local
-    /*
-    this.state = {
-      alert: '',
-      bioData: initialData.data,
-      bioIncluded: initialData.included,
-      lists: {
-        inProgress: {
-          id: 'inProgress',
-          title: 'In Progress',
-          bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'In Progress'),
-        },
-        todo: {
-          id: 'todo',
-          title: 'To Do',
-          bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'To Do'),
-        },
-        done: {
-          id: 'done',
-          title: 'Done',
-          bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'Done'),
-        },
-      },
-    };
-    */
+    // this.state = {
+    //   alert: '',
+    //   bioData: initialData.data,
+    //   bioIncluded: initialData.included,
+    //   lists: {
+    //     inProgress: {
+    //       id: 'inProgress',
+    //       title: 'In Progress',
+    //       bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'In Progress'),
+    //     },
+    //     todo: {
+    //       id: 'todo',
+    //       title: 'To Do',
+    //       bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'To Do'),
+    //     },
+    //     done: {
+    //       id: 'done',
+    //       title: 'Done',
+    //       bios: initialData.data.filter((node) => node.attributes.field_2020_migration_status === 'Done'),
+    //     },
+    //   },
+    // };
 
+    this.setBios = this.setBios.bind(this);
     this.updateItem = this.updateItem.bind(this);
-    this.fetchUpdate = this.fetchUpdate.bind(this);
+    this.patchBio = this.patchBio.bind(this);
     this.slowChangeAlert = this.slowChangeAlert.bind(this);
+  }
 
-    this.fetchItems(); // Populate state from fetch
+  /**
+   * Populate state from fetch
+   */
+  componentDidMount() {
+    this.setBios();
   }
 
   /**
    * Fetch nodes from JSON:API and populate state.
    * Display errors in console log.
    */
-  fetchItems() {
+  async setBios() {
     /*
     * Switch production/local
     */
     // Production
     const url = '/alittlebithidden/437/jsonapi/node/bio?include=field_headshot';
-
     // Local
     // const url = 'https://test.com/alittlebithidden/437/jsonapi/node/bio?include=field_headshot';
 
     // Fetch all bios with headshots
-    fetch(url, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/vnd.api+json',
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          response.json()
-            .then((data) => {
-              if (isValidData(data)) {
-                // Populate state with real data
-                this.setState({
-                  bioData: data.data,
-                  bioIncluded: data.included,
-                  lists: {
-                    inProgress: {
-                      ...this.state.lists.inProgress,
-                      bios: data.data.filter((node) => (
-                        node.attributes.field_2020_migration_status === 'In Progress')),
-                    },
-                    todo: {
-                      ...this.state.lists.todo,
-                      bios: data.data.filter((node) => (
-                        node.attributes.field_2020_migration_status === 'To Do')),
-                    },
-                    done: {
-                      ...this.state.lists.done,
-                      bios: data.data.filter((node) => (
-                        node.attributes.field_2020_migration_status === 'Done')),
-                    },
-                  },
-                });
-              }
-            });
-        } else {
-          throw Error(response.statusText);
-        }
-      })
-      .catch((error) => console.log('Initial GET API error', error));
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/vnd.api+json',
+        },
+      });
+
+      // Log and alert user to failure
+      if (!response.ok) {
+        this.setState({
+          ...this.state,
+          alert: 'Server bios are not available.',
+        });
+        throw Error(response.statusText);
+      }
+
+      // Populate state with Drupal data
+      const json = await response.json();
+      if (isValidData(json)) {
+        this.setState({
+          bioData: json.data,
+          bioIncluded: json.included,
+          lists: {
+            inProgress: {
+              ...this.state.lists.inProgress,
+              bios: json.data.filter((node) => (
+                node.attributes.field_2020_migration_status === 'In Progress')),
+            },
+            todo: {
+              ...this.state.lists.todo,
+              bios: json.data.filter((node) => (
+                node.attributes.field_2020_migration_status === 'To Do')),
+            },
+            done: {
+              ...this.state.lists.done,
+              bios: json.data.filter((node) => (
+                node.attributes.field_2020_migration_status === 'Done')),
+            },
+          },
+        });
+      } else {
+        console.log('Bio data is not valid');
+      }
+    } catch (error) {
+      console.log('Initial GET API error', error);
+    }
   }
 
   /**
    * Patch node with JSON:API
-   * Update state on successful patch.
-   * Display errors in Alert component console log.
+   * Display errors in Alert component and console log.
    */
-  fetchUpdate(drupalId, oldListId, newListId, newMigrationStatus) {
-    // Update bioData with new status
-    const { bioData } = this.state;
-    const thisBio = bioData.find((node) => node.id === drupalId);
-    // const revertedStatus = thisBio.attributes.field_2020_migration_status;
-    thisBio.attributes.field_2020_migration_status = newMigrationStatus;
-
-    // Remove item from old list
-    const updatedOldList = this.state.lists[oldListId].bios.filter((node) => node.id !== drupalId);
-
+  async patchBio(drupalId, newMigrationStatus) {
     /*
     * Switch production/local
     */
     // Production
     const tokenUrl = '/session/token?_format=json';
     const patchUrl = `/alittlebithidden/437/jsonapi/node/bio/${drupalId}`;
-
     // Local
-    // const tokenUrl = `https://test.com/alittlebithidden/session/token`;
+    // const tokenUrl = 'https://test.com/alittlebithidden/session/token';
     // const patchUrl = `https://test.com/alittlebithidden/437/jsonapi/node/bio/${drupalId}`;
-    // Update state
-    // Remove from old list and
-    // Add to new list
-    /*
-    this.setState({
-      ...this.state,
-      bioData,
-      lists: {
-        ...this.state.lists,
-        [oldListId]: {
-          ...this.state.lists[oldListId],
-          bios: updatedOldList,
-        },
-        [newListId]: {
-          ...this.state.lists[newListId],
-          bios: [
-            ...this.state.lists[newListId].bios,
-            thisBio,
-          ],
-        },
-      },
-    });
-    */
 
-    let token;
+    // Fetch token from server, then patch server node
+    try {
+      // Fetch token
+      const tokenResponse = await fetch(tokenUrl, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/vnd.api+json',
+        },
+      });
 
-    // Get token and patch bio
-    fetch(tokenUrl, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/vnd.api+json',
-      },
-    })
-      .then((response) => response.text())
-      .then((responseToken) => {
-        // Patch with responseToken
-        token = responseToken;
-        fetch(patchUrl, {
+      // Log and alert user to failure
+      if (!tokenResponse.ok) {
+        this.setState({
+          ...this.state,
+          alert: 'Server token not found.',
+        });
+        throw Error(tokenResponse.statusText);
+      }
+
+      // Patch server node
+      const token = await tokenResponse.text();
+      try {
+        const response = await fetch(patchUrl, {
           method: 'PATCH',
           credentials: 'same-origin',
           headers: {
@@ -227,50 +211,67 @@ class App extends React.Component {
               },
             },
           }),
-        })
-          .then((patchResponse) => {
-            if (!patchResponse.ok) {
-            // Alert user to failure
-              this.setState({
-                ...this.state,
-                alert: "Node couldn't be updated on the server.",
-              });
-              throw Error(patchResponse.statusText);
-            }
-            // Update state
-            // Remove from old list and
-            // Add to new list
-            this.setState({
-              ...this.state,
-              bioData,
-              lists: {
-                ...this.state.lists,
-                [oldListId]: {
-                  ...this.state.lists[oldListId],
-                  bios: updatedOldList,
-                },
-                [newListId]: {
-                  ...this.state.lists[newListId],
-                  bios: [
-                    ...this.state.lists[newListId].bios,
-                    thisBio,
-                  ],
-                },
-              },
-            });
-          })
-          .catch((error) => console.log('API Patch error', error));
-      })
-      .catch((error) => console.log('API Token error', error));
+        });
+
+        // Log and alert user to failure
+        if (!response.ok) {
+          this.setState({
+            ...this.state,
+            alert: 'Server node cannot be updated.',
+          });
+          throw Error(response.statusText);
+        }
+
+        // Return successful node json
+        return await response.json();
+      } catch (error) {
+        console.log('API Patch error', error);
+      }
+    } catch (error) {
+      console.log('API Token error', error);
+    }
+    return false;
   }
 
   /**
-   * Update node status in state and Drupal server
+   * Update node status on Drupal server and in state
    */
-  updateItem(drupalId, oldListId, newListId, newMigrationStatus) {
+  async updateItem(drupalId, oldListId, newListId, newMigrationStatus) {
     // Update server node
-    // Only update state on success
-    this.fetchUpdate(drupalId, oldListId, newListId, newMigrationStatus);
+    const patchStatus = await this.patchBio(drupalId, newMigrationStatus);
+
+    // Only update state on successful server patch
+    if (patchStatus) {
+      // Update bioData with new status
+      const { bioData } = this.state;
+      const thisBio = bioData.find((node) => node.id === drupalId);
+      thisBio.attributes.field_2020_migration_status = newMigrationStatus;
+
+      // Remove item from old list
+      const updatedOldList = this.state.lists[oldListId].bios.filter((node) => node.id !== drupalId);
+
+      // Update state
+      // Remove from old list and
+      // Add to new list
+      this.setState({
+        ...this.state,
+        bioData,
+        lists: {
+          ...this.state.lists,
+          [oldListId]: {
+            ...this.state.lists[oldListId],
+            bios: updatedOldList,
+          },
+          [newListId]: {
+            ...this.state.lists[newListId],
+            bios: [
+              ...this.state.lists[newListId].bios,
+              thisBio,
+            ],
+          },
+        },
+      });
+    }
   }
 
   /**
